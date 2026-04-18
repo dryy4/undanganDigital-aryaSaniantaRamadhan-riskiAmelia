@@ -1,156 +1,438 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap');
+
 :root {
-    --primary-color: #2c3e50;
-    --accent-color: #d4af37; /* Warna emas */
-    --bg-color: #faf9f6;
-    --text-color: #333;
-    --font-serif: 'Cormorant Garamond', serif;
-    --font-sans: 'Montserrat', sans-serif;
+    --bg-color: #F9F7F3; /* Warna krem elegan */
+    --text-dark: #3A3A3A;
+    --gold: #C5A880; /* Warna emas pudar */
+    --font-serif: 'Playfair Display', serif;
+    --font-sans: 'Lato', sans-serif;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    scroll-behavior: smooth;
 }
 
 body {
     font-family: var(--font-sans);
     background-color: var(--bg-color);
-    color: var(--text-color);
+    color: var(--text-dark);
     line-height: 1.6;
     overflow-x: hidden;
 }
 
-h1, h2, h3, .subtitle, .ampersand {
-    font-family: var(--font-serif);
-    color: var(--primary-color);
+body.locked-scroll {
+    overflow: hidden; /* Mengunci scroll sebelum undangan dibuka */
 }
 
-.section {
-    min-height: 100vh;
+h1, h2, h3, .names, .ampersand {
+    font-family: var(--font-serif);
+    font-weight: 400;
+}
+
+/* ================= SAMPUL (COVER) UPDATE ================= */
+.cover-screen {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100vh;
+    
+    /* Ganti 'bg-cover.webp' dengan nama file fotomu */
+    background: url('assets/w6.jpeg') center/cover no-repeat;
+    
+    z-index: 9999;
     display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Membuat teks menempel di atas dan bawah */
+    align-items: center;
+    text-align: center;
+    padding: 10vh 20px 8vh; /* Jarak dari tepi atas dan tepi bawah layar */
+    transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* Sedikit overlay gradasi transparan di atas dan bawah agar teks selalu terbaca */
+.cover-screen::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to bottom, rgba(249, 247, 243, 0.6) 0%, rgba(249, 247, 243, 0) 30%, rgba(249, 247, 243, 0) 70%, rgba(249, 247, 243, 0.5) 100%);
+    z-index: 0;
+}
+
+.cover-top, .cover-bottom {
+    z-index: 1; /* Memastikan teks berada di atas overlay */
+    width: 100%;
+}
+
+.wedding-text {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    color: #00ddff;
+    margin-bottom: 15px;
+}
+
+.cover-names {
+    font-family: var(--font-serif);
+    font-size: 3.5rem;
+    line-height: 1.1;
+    color: #00ddff;
+    text-shadow: 2px 2px 5px rgba(255,255,255,0.7); /* Bayangan terang agar teks menonjol */
+    margin-bottom: 25px;
+}
+
+.cover-date {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: #00ddff;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.dear-text {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    color: #00ddff;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.guest-name-cover {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    color: #00ddff;
+    margin-bottom: 20px;
+}
+
+/* ================= TOMBOL OPEN INVITATION ================= */
+.btn-open-invitation {
+    background-color: #3c4a57; /* Warna gelap elegan sesuai gambar */
+    color: #ffffff;
+    border: none;
+    padding: 12px 28px;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px; /* Ujung sedikit membulat */
+    cursor: pointer;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    padding: 40px 20px;
+    gap: 10px; /* Jarak antara ikon SVG dan teks */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: background-color 0.3s, transform 0.2s;
 }
 
-.container {
+.btn-open-invitation:hover {
+    background-color: #2d3748;
+    transform: translateY(-3px);
+}
+
+.cover-screen.opened {
+    transform: translateY(-100%);
+}
+/* ================= LAYOUT UTAMA ================= */
+.section {
+    padding: 80px 20px;
+    text-align: center;
     max-width: 800px;
     margin: 0 auto;
-}
-
-/* Hero Section */
-.hero {
-    /* Ganti URL dengan gambar background format .webp kamu */
-    background: linear-gradient(rgba(250, 249, 246, 0.7), rgba(250, 249, 246, 0.9)), url('https://via.placeholder.com/1000') center/cover;
+    position: relative;
 }
 
 .title {
-    font-size: 4rem;
-    margin: 10px 0;
-}
-
-.subtitle {
-    font-size: 1.5rem;
-    letter-spacing: 3px;
-}
-
-.date {
-    font-size: 1.1rem;
-    margin-bottom: 30px;
-    font-weight: 300;
-}
-
-/* Buttons */
-.btn {
-    display: inline-block;
-    padding: 12px 30px;
-    background-color: var(--primary-color);
-    color: white;
-    text-decoration: none;
-    border-radius: 30px;
-    transition: background 0.3s ease;
-}
-
-.btn:hover { background-color: var(--accent-color); }
-
-.btn-outline {
-    display: inline-block;
-    padding: 10px 25px;
-    border: 1px solid var(--primary-color);
-    color: var(--primary-color);
-    text-decoration: none;
-    border-radius: 30px;
-    margin-top: 15px;
-    transition: all 0.3s ease;
-}
-
-.btn-outline:hover {
-    background-color: var(--primary-color);
-    color: white;
-}
-
-/* Couple Section */
-.couple h2, .event h2 {
     font-size: 2.5rem;
+    color: var(--gold);
     margin-bottom: 40px;
 }
 
-.couple-wrapper {
+/* ================= GAMBAR MELENGKUNG (ARCH) ================= */
+.couple-grid {
     display: flex;
     flex-direction: column;
     gap: 30px;
     align-items: center;
 }
-
 @media (min-width: 768px) {
-    .couple-wrapper {
-        flex-direction: row;
-        justify-content: space-around;
-    }
+    .couple-grid { flex-direction: row; justify-content: center; gap: 50px; }
 }
 
-.placeholder-img {
-    width: 150px;
-    height: 150px;
-    background-color: #ddd;
-    border-radius: 50%;
-    margin: 0 auto 15px;
+.arch-img {
+    width: 220px;
+    height: 300px;
     object-fit: cover;
+    /* Ini rahasia estetiknya: atas melengkung penuh, bawah sedikit melengkung */
+    border-radius: 120px 120px 15px 15px; 
+    box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+    margin-bottom: 15px;
 }
 
-.ampersand {
-    font-size: 3rem;
-    color: var(--accent-color);
-}
-
-/* Event Section */
-.event-card {
-    background: white;
-    padding: 40px;
+/* ================= EVENT & MAPS ================= */
+.event-box {
+    background: #fff;
+    padding: 40px 20px;
     border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.03);
+    border: 1px solid #f0eae1;
+}
+.date-big { font-size: 1.2rem; font-weight: bold; margin: 15px 0 5px; }
+.maps-wrapper {
+    margin: 25px 0 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #e5e5e5;
 }
 
-/* Footer */
-footer {
+/* ================= GALERI ================= */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+.gal-img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* ================= ORNAMEN ================= */
+.ornament {
+    margin: 0 auto 30px;
+    display: block;
+    opacity: 0.8;
+}
+
+/* ================= MUSIK (PIRINGAN) ================= */
+.music-control {
+    position: fixed; bottom: 20px; right: 20px;
+    width: 50px; height: 50px;
+    background: #fff; border-radius: 50%;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    display: none; justify-content: center; align-items: center;
+    cursor: pointer; z-index: 1000;
+}
+.music-control.visible { display: flex; }
+.vinyl {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: radial-gradient(circle, #333 30%, #111 70%);
+    border: 2px solid #e0e0e0;
+    animation: spin 3s linear infinite;
+    animation-play-state: paused;
+}
+.vinyl::before {
+    content: ''; position: absolute;
+    width: 12px; height: 12px; background: var(--gold); border-radius: 50%;
+}
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+/* ================= INTRO & COUNTDOWN ================= */
+.intro-sec {
+    position: relative;
+    padding: 80px 20px 40px;
+    background-color: var(--bg-color);
+}
+
+/* Dekorasi bayangan daun (opsional, ganti URL dengan gambar daun transparanmu) */
+.leaf-shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 250px;
+    background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Leaf_shadow.png/640px-Leaf_shadow.png') no-repeat top left;
+    background-size: contain;
+    opacity: 0.15;
+    pointer-events: none;
+}
+
+.script-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3rem;
+    color: #5e6b73; /* Warna teks abu kebiruan */
+    margin-bottom: 20px;
+    text-align: right;
+    padding-right: 5%;
+}
+
+.countdown-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-bottom: 35px;
+}
+
+.time-box {
     text-align: center;
+    color: #333;
+}
+
+.time-box span {
+    font-size: 1.6rem;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    display: block;
+}
+
+.time-box p {
+    font-size: 0.9rem;
+    margin: 0;
+    text-transform: capitalize;
+}
+
+.intro-image-wrapper {
+    width: 100%;
+    max-width: 550px;
+    margin: 0 auto 35px;
+}
+
+.intro-img {
+    width: 100%;
+    height: auto;
+    border: 5px solid #3c4a57; /* Warna border tegas seperti di referensi */
+    border-radius: 4px;
+    object-fit: cover;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.intro-names {
+    font-family: var(--font-serif);
+    font-size: 2.8rem;
+    letter-spacing: 5px;
+    color: #3c4a57;
+    /* Efek bayangan tegas agar mirip gambar referensi */
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.25); 
+    margin-bottom: 25px;
+    text-transform: uppercase;
+}
+
+.intro-quote {
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.8;
+    font-weight: 400;
+}
+
+/* ================= LOVE JOURNEY ================= */
+.journey-sec {
+    padding: 60px 20px;
+    background-color: var(--bg-color);
+}
+
+.journey-hero {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto 40px;
+    border-radius: 8px; /* Siku sedikit melengkung */
+    overflow: hidden;
+    border: 4px solid #3c4a57; /* Border tegas sesuai referensi */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.journey-img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+    /* Menggelapkan gambar sedikit agar tulisan putih terbaca jelas */
+    filter: brightness(0.75); 
+}
+
+.journey-hero-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Menggunakan font Dancing Script yang sudah kita import sebelumnya */
+    font-family: 'Dancing Script', cursive; 
+    font-size: 3.8rem;
+    color: #ffffff;
+    text-align: center;
+    line-height: 1.1;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
+    width: 100%;
+}
+
+.journey-timeline {
+    max-width: 550px;
+    margin: 0 auto;
+}
+
+.journey-item {
+    margin-bottom: 40px;
+}
+
+/* Judul Cerita (Contoh: Awal Bertemu - 2020) */
+.journey-title {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    color: #55626b; /* Warna abu-abu gelap kebiruan */
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+/* Teks Cerita */
+.journey-desc {
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    color: #555555;
+    line-height: 1.7;
+    text-align: justify; /* Teks rata kanan kiri */
+}
+
+/* ================= PENUTUP & FOOTER ================= */
+.closing-sec {
+    position: relative;
+    width: 100%;
+    min-height: 100vh; /* Memastikan tingginya memenuhi satu layar penuh */
+    
+    /* Ganti 'bg-closing.webp' dengan foto aslimu */
+    background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.6) 100%), url('assets/WhatsApp\ Image\ 2026-04-18\ at\ 20.36.09.jpeg') center/cover no-repeat;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Mendorong teks ke atas dan footer ke bawah */
+    align-items: center;
+    padding-top: 10vh;
+    text-align: center;
+}
+
+.closing-content {
+    z-index: 2; /* Memastikan teks ada di atas gambar */
+}
+
+.closing-thankyou {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3.5rem;
+    color: #ffffff;
+    margin-bottom: 5px;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.5); /* Memberikan bayangan pada teks */
+}
+
+.closing-names {
+    font-family: var(--font-serif);
+    font-size: 3.5rem;
+    line-height: 1.1;
+    color: #ffffff;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+    letter-spacing: 2px;
+}
+
+/* ================= FOOTER ================= */
+.footer-sec {
+    z-index: 2;
+    width: 100%;
     padding: 20px;
-    background-color: var(--primary-color);
-    color: white;
-    font-size: 0.8rem;
+    text-align: center;
+    color: #f0f0f0;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    margin-bottom: 30px; /* Memberi jarak agar tidak tertutup tombol musik piringan hitam */
 }
 
-/* ANIMATION CLASSES */
-.animate-on-scroll {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-.animate-on-scroll.show {
-    opacity: 1;
-    transform: translateY(0);
+.footer-sec p {
+    margin: 5px 0;
+    letter-spacing: 1px;
+    opacity: 0.8;
 }
