@@ -436,3 +436,31 @@ h1, h2, h3, .names, .ampersand {
     letter-spacing: 1px;
     opacity: 0.8;
 }
+
+/* ================= SOCIAL MEDIA FOOTER ================= */
+.footer-social {
+    margin-bottom: 15px; /* Jarak antara IG dan teks copyright */
+}
+
+.ig-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Jarak antara logo IG dan teks username */
+    color: #ffffff; /* Warna teks putih */
+    text-decoration: none; /* Menghilangkan garis bawah pada link */
+    font-size: 1rem;
+    font-family: var(--font-sans);
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.ig-link:hover {
+    color: #C5A880; /* Berubah jadi warna emas pudar saat disentuh */
+    transform: translateY(-2px); /* Efek sedikit terangkat saat disentuh */
+}
+
+.ig-icon {
+    /* Memastikan ukuran icon pas dengan teks */
+    width: 22px; 
+    height: 22px;
+}
